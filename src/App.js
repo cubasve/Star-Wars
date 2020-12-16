@@ -6,12 +6,14 @@ import { getAllStarships } from './services/sw-api';
 
 export default class App extends Component {
   state = {
-    starships: null,
+    starships: [],
   }
 
   async componentDidMount() {
     try {
-      //getAllStarships data from API
+      const starshipData = await getAllStarships();
+      console.log(starshipData);
+      this.setState({ starships: starshipData.results });
     } catch (err) {
       console.error(err);
     }
@@ -22,7 +24,9 @@ export default class App extends Component {
       <div className="App">
         <header className="App-header">
           <Switch>
-            <Route exact path="/" render={() => (<Link><StarshipPage /></Link>)} />
+            <Route exact path="/">
+              {this.state.starships.map(starship => (<Link to="/starship/">{starship.name}</Link>))}
+            </Route>
           </Switch>
         </header>
       </div>
