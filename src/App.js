@@ -25,8 +25,10 @@ export default class App extends Component {
         <header className="App-header">
           <Switch>
             <Route exact path="/">
-              {this.state.starships.map(starship => (<Link to="/starship/">{starship.name}</Link>))}
+              {this.state.starships.map((starship, id) => (<Link to={`/starship/${id}`}>{starship.name}</Link>))}
             </Route>
+
+            <Route path='/starship/:id' render={props => <StarshipPage {...props} ship={this.state.starships} />} />
           </Switch>
         </header>
       </div>
